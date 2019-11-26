@@ -42,7 +42,6 @@ jobs:
      - checkout
      - run:
          command: source /okta_venv/bin/activate;
-                  ./scripts/run_terraform.sh $TRAINING_COHORT client_vpn refresh -input=false -auto-approve;
                   ./scripts/run_terraform.sh $TRAINING_COHORT client_vpn apply -input=false -auto-approve;
 
  buildAMIs:

@@ -30,7 +30,7 @@ BUCKET_NAME=${TF_STATE_BUCKET:-$DEFAULT_BUCKET_NAME}
 COMPONENT_DIR=${TF_COMPONENT_DIR:-components}
 
 TF_VAR_ARGS=""
-if [[ "$TF_ACTION" =~ ^(plan|apply|destroy|refresh)$ ]]; then
+if [[ "$TF_ACTION" =~ ^(plan|apply|destroy)$ ]]; then
     TF_VAR_ARGS="-var cohort=${COHORT_NAME} \
                  -var aws_region=${AWS_DEFAULT_REGION}"
 fi
