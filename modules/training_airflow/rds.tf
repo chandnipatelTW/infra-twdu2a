@@ -7,7 +7,7 @@ resource "random_password" "password" {
 resource "aws_db_instance" "airflow_postgres" {
   identifier = "training-airflow-${var.deployment_identifier}"
 
-  allocated-storage      = "30"
+  allocated_storage      = "30"
   engine                 = "postgres"
   username               = "airflow"
   password               = "${random_password.password.result}"
