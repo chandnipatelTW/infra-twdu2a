@@ -34,6 +34,7 @@ jobs:
                  ./scripts/run_terraform.sh $TRAINING_COHORT ingester apply -input=false -auto-approve -var-file=prod-env.tfvars;
                  ./scripts/run_terraform.sh $TRAINING_COHORT monitoring_dashboard apply -input=false -auto-approve;
                  ./scripts/run_terraform.sh $TRAINING_COHORT client_vpn apply -input=false -auto-approve;
+                 ./scripts/run_terraform.sh $TRAINING_COHORT training_airflow apply -input=false -auto-approve;
 
  buildClientVPN:
      <<: *defaults
@@ -66,6 +67,7 @@ jobs:
                  ./scripts/run_terraform.sh $TRAINING_COHORT training_bucket destroy -input=false -auto-approve;
                  ./scripts/run_terraform.sh $TRAINING_COHORT bastion destroy -input=false -auto-approve;
                  ./scripts/run_terraform.sh $TRAINING_COHORT base_networking destroy -input=false -auto-approve;
+                 ./scripts/run_terraform.sh $TRAINING_COHORT training_airflow destroy -input=false -auto-approve;
 
 workflows:
   version: 2
