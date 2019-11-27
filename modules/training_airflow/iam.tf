@@ -74,3 +74,27 @@ resource "aws_iam_policy_attachment" "airflow_parameter_store" {
   roles      = ["${aws_iam_role.airflow.name}"]
   policy_arn = "${aws_iam_policy.airflow_parameter_store.arn}"
 }
+
+data "aws_iam_policy_document" "airflow_cloudwatch" {
+  statement {
+    actions = [
+      "cloudwatch:PutMetricData",
+      "cloudwatch:GetMetricStatistics",
+      "cloudwatch:ListMetrics",
+      "ec2:DescribeTags"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "airflow_cloudwatch" {
+  name        = "airflow-cloudwatch-${var.deployment_identifier}"
+  description = "Policy for airflow to push data to cloudwatch"
+  policy      = "${data.aws_iam_policy_document.airflow_cloudwatch.json}"
+}
+
+resource "aws_iam_policy_attachment" "airflow_cloudwatch" {
+  name       = "airflow-cloudwatch-${var.deployment_identifier}"
+  roles      = ["${aws_iam_role.airflow.name}"]
+  policy_arn = "${aws_iam_policy.airflow_cloudwatch.arn}"
+}
