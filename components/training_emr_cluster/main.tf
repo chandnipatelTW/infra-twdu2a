@@ -28,7 +28,7 @@ data "terraform_remote_state" "bastion" {
 data "terraform_remote_state" "airflow" {
   backend = "s3"
   config {
-    key    = "airflow.tfstate"
+    key    = "training_airflow.tfstate"
     bucket = "tw-dataeng-${var.cohort}-tfstate"
     region = "${var.aws_region}"
   }
