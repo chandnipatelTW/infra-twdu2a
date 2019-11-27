@@ -28,7 +28,7 @@ EOF
 resource "aws_cloudwatch_metric_alarm" "delivery_file_check" {
   alarm_name                = "2wheelers-delivery-file-check"
   comparison_operator       = "LessThanThreshold"
-  evaluation_periods        = "5"
+  evaluation_periods        = "1"
   metric_name               = "delivery_file"
   namespace                 = "TwoWheelers"
   period                    = "300"
