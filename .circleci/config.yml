@@ -20,14 +20,6 @@ jobs:
                ./scripts/create_tf_state_bucket.sh $TRAINING_COHORT;
                ./scripts/create_key_pair.sh $TRAINING_COHORT;
 
- firstTimeSetupTest:
-   <<: *defaults
-   steps:
-   - checkout
-   - run:
-       command: source /okta_venv/bin/activate;
-               ./scripts/create_tf_state_bucket.sh $TRAINING_COHORT_TEST;
-
  buildProductionEnvironment:
      <<: *defaults
      steps:
@@ -79,14 +71,6 @@ jobs:
 
 workflows:
   version: 2
-  buildTest:
-    jobs:
-      - dummy
-
-      - approvefirstTimeSetup:
-          type: approval
-          requires:
-            - dummy
   build:
     jobs:
       - dummy
