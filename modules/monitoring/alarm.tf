@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "alarm" {
-  name = "2wheelers-alarms-topic"
+  name = "2wheelers-alarms-topic-${var.cohort}"
   delivery_policy = <<EOF
 {
   "http": {
@@ -26,7 +26,7 @@ EOF
 }
 
 resource "aws_cloudwatch_metric_alarm" "delivery_file_check" {
-  alarm_name                = "2wheelers-delivery-file-check"
+  alarm_name                = "2wheelers-delivery-file-check-${var.cohort}"
   comparison_operator       = "LessThanThreshold"
   evaluation_periods        = "1"
   metric_name               = "delivery_file"

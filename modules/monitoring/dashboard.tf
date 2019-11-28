@@ -26,7 +26,7 @@ data "terraform_remote_state" "ingester" {
 }
 
 resource "aws_cloudwatch_dashboard" "main" {
-  dashboard_name = "2wheelers"
+  dashboard_name = "2wheelers-${var.cohort}"
   dashboard_body = <<EOF
 {
     "widgets": [
