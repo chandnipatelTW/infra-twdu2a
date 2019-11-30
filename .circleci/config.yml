@@ -76,19 +76,24 @@ workflows:
   build:
     jobs:
       - dummy
+      - approveTestEnvSetup:
+          type: approval
+          requires:
+            - dummy
 
       - approvefirstTimeSetup:
           type: approval
           requires:
-            - dummy
+            - approveTestEnvSetup
       - firstTimeSetup:
+          context: test
           requires:
             - approvefirstTimeSetup
 
       - approvebuildAMIs:
           type: approval
           requires:
-            - dummy
+            - approveTestEnvSetup
       - buildAMIs:
           requires:
             - approvebuildAMIs
@@ -96,23 +101,26 @@ workflows:
       - approveBuildProductionEnvironment:
           type: approval
           requires:
-            - dummy
+            - approveTestEnvSetup
       - buildProductionEnvironment:
+          context: test
           requires:
             - approveBuildProductionEnvironment
 
       - approvebuildClientVPN:
           type: approval
           requires:
-            - dummy
+            - approveTestEnvSetup
       - buildClientVPN:
+          context: test
           requires:
             - approvebuildClientVPN
 
       - approveDestroyProductionEnvironment:
           type: approval
           requires:
-            - dummy
+            - approveTestEnvSetup
       - destroyProductionEnvironment:
+          context: test
           requires:
             - approveDestroyProductionEnvironment
