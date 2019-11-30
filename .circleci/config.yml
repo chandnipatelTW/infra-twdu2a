@@ -20,7 +20,7 @@ jobs:
                ./scripts/create_tf_state_bucket.sh $TRAINING_COHORT;
                ./scripts/create_key_pair.sh $TRAINING_COHORT;
 
- buildProductionEnvironment:
+ buildEnvironment:
      <<: *defaults
      steps:
      - checkout
@@ -54,7 +54,7 @@ jobs:
                  ./scripts/build_ami.sh training_kafka ;
                  ./scripts/build_ami.sh training_ingester ;
 
- destroyProductionEnvironment:
+ destroyEnvironment:
      <<: *defaults
      steps:
      - checkout
@@ -98,14 +98,14 @@ workflows:
           requires:
             - approvebuildAMIs
 
-      - approveBuildProductionEnvironment:
+      - approveBuildEnvironment:
           type: approval
           requires:
             - approveTestEnvSetup
-      - buildProductionEnvironment:
+      - buildEnvironment:
           context: test
           requires:
-            - approveBuildProductionEnvironment
+            - approveBuildEnvironment
 
       - approvebuildClientVPN:
           type: approval
@@ -116,11 +116,11 @@ workflows:
           requires:
             - approvebuildClientVPN
 
-      - approveDestroyProductionEnvironment:
+      - approveDestroyEnvironment:
           type: approval
           requires:
             - approveTestEnvSetup
-      - destroyProductionEnvironment:
+      - destroyEnvironment:
           context: test
           requires:
-            - approveDestroyProductionEnvironment
+            - approveDestroyEnvironment
