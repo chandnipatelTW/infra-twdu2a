@@ -98,14 +98,14 @@ workflows:
           requires:
             - approvebuildAMIs
 
-      - approveBuildEnvironment:
+      - approveBuildEnvironmentTest:
           type: approval
           requires:
             - approveTestEnvSetup
       - buildEnvironment:
           context: test
           requires:
-            - approveBuildEnvironment
+            - approveBuildEnvironmentTest
 
       - approvebuildClientVPN:
           type: approval
@@ -124,3 +124,17 @@ workflows:
           context: test
           requires:
             - approveDestroyEnvironment
+                  
+      - approveProdEnvSetup:
+          type: approval
+          requires:
+            - approveBuildEnvironmentTest
+
+      - approvefirstTimeSetupProd:
+          type: approval
+          requires:
+            - approveProdEnvSetup
+      - firstTimeSetup:
+          context: production
+          requires:
+            - approvefirstTimeSetup
