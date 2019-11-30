@@ -3,7 +3,7 @@ defaults: &defaults
   - image: kaleeaswari/infrabox
   working_directory: /home/circleci/project
 
-version: 2
+version: 2.1
 jobs:
  dummy:
     <<: *defaults
@@ -72,7 +72,7 @@ jobs:
                  ./scripts/run_terraform.sh $TRAINING_COHORT base_networking destroy -input=false -auto-approve;
 
 workflows:
-  version: 2
+  version: 2.1
   build:
     jobs:
       - dummy
@@ -103,6 +103,7 @@ workflows:
           requires:
             - approveTestEnvSetup
       - buildEnvironment:
+          name: testEnvironmentSetup
           context: test
           requires:
             - approveBuildEnvironmentTest
@@ -128,7 +129,7 @@ workflows:
       - approveProdEnvSetup:
           type: approval
           requires:
-            - approveBuildEnvironmentTest
+            - testEnvironmentSetup
 
       - approvefirstTimeSetupProd:
           type: approval
