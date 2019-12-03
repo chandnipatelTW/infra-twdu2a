@@ -1,11 +1,11 @@
 data "aws_acm_certificate" "root" {
-  domain      = "${var.cohort}.training"
+  domain      = "twdu-2a.training"
   types       = ["IMPORTED"]
   most_recent = true
 }
 
 data "aws_acm_certificate" "server" {
-  domain      = "openvpn.${var.cohort}.training"
+  domain      = "openvpn.twdu-2a.training"
   types       = ["IMPORTED"]
   most_recent = true
 }
