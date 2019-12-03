@@ -221,16 +221,16 @@ workflows:
           requires:
             - approvebuildAMIsProd
 
-      - approveBuildEnvironmentProd:
-          context: production
-          type: approval
-          requires:
-            - approveProdEnvSetup
-      - buildEnvironment:
-          name: prodEnvironmentSetup
-          context: production
-          requires:
-            - approveBuildEnvironmentProd
+#      - approveBuildEnvironmentProd:
+#          context: production
+#          type: approval
+#          requires:
+#            - approveProdEnvSetup
+#      - buildEnvironment:
+#          name: prodEnvironmentSetup
+#          context: production
+#          requires:
+#            - approveBuildEnvironmentProd
 
       - approvebuildClientVPNProd:
           context: production
