@@ -76,6 +76,7 @@ workflows:
   build:
     jobs:
       - dummy
+
       - approveQAEnvSetup:
           context: qa
           type: approval
@@ -198,7 +199,7 @@ workflows:
           context: production
           type: approval
           requires:
-            - testEnvironmentSetup
+            - dummy
 
       - approvefirstTimeSetupProd:
           context: production
