@@ -51,3 +51,43 @@ resource "aws_security_group_rule" "kafka_emr_ingress_zookeeper" {
   protocol                 = "tcp"
   description              = "Zookeeper ingress for EMR cluster"
 }
+
+resource "aws_security_group_rule" "kafka_cluster_ingress_zookeeper" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.kafka.id}"
+  self = true
+  from_port                = 2181
+  to_port                  = 2181
+  protocol                 = "tcp"
+  description              = "Zookeeper ingress for communication within Kafka cluster"
+}
+
+resource "aws_security_group_rule" "kafka_cluster_ingress_kafka" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.kafka.id}"
+  self = true
+  from_port                = 9092
+  to_port                  = 9092
+  protocol                 = "tcp"
+  description              = "Kafka ingress for communication within Kafka cluster"
+}
+
+resource "aws_security_group_rule" "kafka_cluster_ingress_zookeeper_internal" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.kafka.id}"
+  self = true
+  from_port                = 2888
+  to_port                  = 2888
+  protocol                 = "tcp"
+  description              = "Zookeeper internal ingress for zookeeper ensemble"
+}
+
+resource "aws_security_group_rule" "kafka_cluster_ingress_zookeeper_leader" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.kafka.id}"
+  self = true
+  from_port                = 3888
+  to_port                  = 3888
+  protocol                 = "tcp"
+  description              = "Zookeeper internal ingress for leader election in zookeeper"
+}

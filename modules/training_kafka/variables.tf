@@ -29,3 +29,11 @@ variable "bastion_security_group_id" {
 variable "emr_security_group_id" {
   description = "Id of EMR cluster security group to Kafka & Zookeeper ingress"
 }
+
+variable "kafka_nodes_count" {
+  description = "Number of nodes in Kafka cluster"
+}
+
+variable "cohort" {
+  description = "Cohort name"
+}

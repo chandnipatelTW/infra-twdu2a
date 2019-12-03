@@ -45,4 +45,6 @@ module "training_kafka" {
   ec2_key_pair              = "tw-dataeng-${var.cohort}"
   dns_zone_id               = "${data.terraform_remote_state.base_networking.dns_zone_id}"
   instance_type             = "${var.kafka["instance_type"]}"
+  kafka_nodes_count = 3
+  cohort = "${var.cohort}"
 }
