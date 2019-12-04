@@ -77,17 +77,18 @@ workflows:
     jobs:
       - dummy
 
+     # QA environment setup starts here.
       - approveQAEnvSetup:
           context: qa
           type: approval
           requires:
             - dummy
+
       - approvefirstTimeQASetup:
           context: qa
           type: approval
           requires:
             - approveQAEnvSetup
-
       - firstTimeSetup:
           context: qa
           requires:
@@ -98,17 +99,16 @@ workflows:
           type: approval
           requires:
             - approveQAEnvSetup
-
       - buildAMIs:
           context: qa
           requires:
             - approvebuildQAAMIs
+
       - approveBuildEnvironmentQA:
           context: qa
           type: approval
           requires:
             - approveQAEnvSetup
-
       - buildEnvironment:
           name: qaEnvironmentSetup
           context: qa
@@ -135,74 +135,13 @@ workflows:
           requires:
             - approveDestroyQAEnvironment
 
-
-      # Test environment setup starts here.
-
-      - approveTestEnvSetup:
-          context: test
-          type: approval
-          requires:
-            - dummy
-
-      - approvefirstTimeSetup:
-          context: test
-          type: approval
-          requires:
-            - approveTestEnvSetup
-      - firstTimeSetup:
-          context: test
-          requires:
-            - approvefirstTimeSetup
-
-      - approvebuildAMIs:
-          context: test
-          type: approval
-          requires:
-            - approveTestEnvSetup
-      - buildAMIs:
-          context: test
-          requires:
-            - approvebuildAMIs
-
-      - approveBuildEnvironmentTest:
-          context: test
-          type: approval
-          requires:
-            - approveTestEnvSetup
-      - buildEnvironment:
-          name: testEnvironmentSetup
-          context: test
-          requires:
-            - approveBuildEnvironmentTest
-
-      - approvebuildClientVPN:
-          context: test
-          type: approval
-          requires:
-            - approveTestEnvSetup
-      - buildClientVPN:
-          context: test
-          requires:
-            - approvebuildClientVPN
-
-      - approveDestroyEnvironment:
-          context: test
-          type: approval
-          requires:
-            - approveTestEnvSetup
-      - destroyEnvironment:
-          context: test
-          requires:
-            - approveDestroyEnvironment
-      # Production workflow begin here...
+      # Production environment setup starts here.
       - approveProdEnvSetup:
-          context: production
           type: approval
           requires:
-            - dummy
+            - qaEnvironmentSetup
 
       - approvefirstTimeSetupProd:
-          context: production
           type: approval
           requires:
             - approveProdEnvSetup
@@ -212,7 +151,6 @@ workflows:
             - approvefirstTimeSetupProd
 
       - approvebuildAMIsProd:
-          context: production
           type: approval
           requires:
             - approveProdEnvSetup
@@ -221,19 +159,17 @@ workflows:
           requires:
             - approvebuildAMIsProd
 
-#      - approveBuildEnvironmentProd:
-#          context: production
-#          type: approval
-#          requires:
-#            - approveProdEnvSetup
-#      - buildEnvironment:
-#          name: prodEnvironmentSetup
-#          context: production
-#          requires:
-#            - approveBuildEnvironmentProd
+      - approveBuildEnvironmentProd:
+          type: approval
+          requires:
+            - approveProdEnvSetup
+      - buildEnvironment:
+          name: prodEnvironmentSetup
+          context: production
+          requires:
+            - approveBuildEnvironmentProd
 
       - approvebuildClientVPNProd:
-          context: production
           type: approval
           requires:
             - approveProdEnvSetup
@@ -243,7 +179,6 @@ workflows:
             - approvebuildClientVPNProd
 
       - approveDestroyEnvironmentProd:
-          context: production
           type: approval
           requires:
             - approveProdEnvSetup
