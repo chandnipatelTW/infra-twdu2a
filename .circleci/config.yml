@@ -76,61 +76,70 @@ workflows:
   build:
     jobs:
       - dummy
-      - approveTestEnvSetup:
+
+     # QA environment setup starts here.
+      - approveQAEnvSetup:
+          context: qa
           type: approval
           requires:
             - dummy
 
-      - approvefirstTimeSetup:
+      - approvefirstTimeQASetup:
+          context: qa
           type: approval
           requires:
-            - approveTestEnvSetup
+            - approveQAEnvSetup
       - firstTimeSetup:
-          context: test
+          context: qa
           requires:
-            - approvefirstTimeSetup
+            - approvefirstTimeQASetup
 
-      - approvebuildAMIs:
+      - approvebuildQAAMIs:
+          context: qa
           type: approval
           requires:
-            - approveTestEnvSetup
+            - approveQAEnvSetup
       - buildAMIs:
-          context: test
+          context: qa
           requires:
-            - approvebuildAMIs
+            - approvebuildQAAMIs
 
-      - approveBuildEnvironmentTest:
+      - approveBuildEnvironmentQA:
+          context: qa
           type: approval
           requires:
-            - approveTestEnvSetup
+            - approveQAEnvSetup
       - buildEnvironment:
-          name: testEnvironmentSetup
-          context: test
+          name: qaEnvironmentSetup
+          context: qa
           requires:
-            - approveBuildEnvironmentTest
+            - approveBuildEnvironmentQA
 
-      - approvebuildClientVPN:
+      - approvebuildQAClientVPN:
+          context: qa
           type: approval
           requires:
-            - approveTestEnvSetup
+            - approveQAEnvSetup
       - buildClientVPN:
-          context: test
+          context: qa
           requires:
-            - approvebuildClientVPN
+            - approvebuildQAClientVPN
 
-      - approveDestroyEnvironment:
+      - approveDestroyQAEnvironment:
+          context: qa
           type: approval
           requires:
-            - approveTestEnvSetup
+            - approveQAEnvSetup
       - destroyEnvironment:
-          context: test
+          context: qa
           requires:
-            - approveDestroyEnvironment
-                  
+            - approveDestroyQAEnvironment
+
+      # Production environment setup starts here.
       - approveProdEnvSetup:
           type: approval
           requires:
-            - testEnvironmentSetup
+            - qaEnvironmentSetup
 
       - approvefirstTimeSetupProd:
           type: approval
