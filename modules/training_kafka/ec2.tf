@@ -30,6 +30,10 @@ resource "aws_instance" "kafka_cluster" {
     delete_on_termination = false
   }
 
+  lifecycle {
+    ignore_changes = ["ami"]
+  }
+
   tags = "${merge(
     local.common_tags,
     map(
