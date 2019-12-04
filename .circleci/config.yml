@@ -80,11 +80,57 @@ workflows:
           type: approval
           requires:
             - dummy
+
+      - approvefirstTimeSetup:
+          type: approval
+          requires:
+            - approveTestEnvSetup
+      - firstTimeSetup:
+          context: test
+          requires:
+            - approvefirstTimeSetup
+
+      - approvebuildAMIs:
+          type: approval
+          requires:
+            - approveTestEnvSetup
+      - buildAMIs:
+          context: test
+          requires:
+            - approvebuildAMIs
+
+      - approveBuildEnvironmentTest:
+          type: approval
+          requires:
+            - approveTestEnvSetup
+      - buildEnvironment:
+          name: testEnvironmentSetup
+          context: test
+          requires:
+            - approveBuildEnvironmentTest
+
+      - approvebuildClientVPN:
+          type: approval
+          requires:
+            - approveTestEnvSetup
+      - buildClientVPN:
+          context: test
+          requires:
+            - approvebuildClientVPN
+
+      - approveDestroyEnvironment:
+          type: approval
+          requires:
+            - approveTestEnvSetup
+      - destroyEnvironment:
+          context: test
+          requires:
+            - approveDestroyEnvironment
                   
       - approveProdEnvSetup:
           type: approval
           requires:
-            - dummy
+            - testEnvironmentSetup
 
       - approvefirstTimeSetupProd:
           type: approval
