@@ -139,7 +139,7 @@ workflows:
       - approveProdEnvSetup:
           type: approval
           requires:
-            - qaEnvironmentSetup
+            - dummy
 
       - approvefirstTimeSetupProd:
           type: approval
