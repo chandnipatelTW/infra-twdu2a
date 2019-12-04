@@ -19,9 +19,9 @@ dataDir=/var/lib/zookeeper
 clientPort=2181
 initLimit=15
 syncLimit=2
-server.1=kafka-1.${cohort}.training:2888:3888
-server.2=kafka-2.${cohort}.training:2888:3888
-server.3=kafka-3.${cohort}.training:2888:3888
+server.1=%{ if index == 1 }0.0.0.0%{ else }kafka-1.${cohort}.training%{ endif }:2888:3888
+server.2=%{ if index == 2 }0.0.0.0%{ else }kafka-2.${cohort}.training%{ endif }:2888:3888
+server.3=%{ if index == 3 }0.0.0.0%{ else }kafka-3.${cohort}.training%{ endif }:2888:3888
 EOF
 
 
@@ -32,6 +32,8 @@ sed -i 's/zookeeper.connect=localhost:2181/zookeeper.connect=kafka-1.${cohort}.t
 echo -e "\ndefault.replication.factor=3\n"
 sed -i 's/offsets.topic.replication.factor=1/offsets.topic.replication.factor=3/g' /etc/kafka/server.properties
 echo -e "\nmin.insync.replicas=2\n" >> /etc/kafka/server.properties
+
+sleep 3m
 
 # 5. Start zookeeper
 systemctl start confluent-zookeeper
