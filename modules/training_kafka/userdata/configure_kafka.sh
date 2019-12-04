@@ -29,7 +29,7 @@ EOF
 # 4. Set kafka server.properties broker.id, zookeeper.connect, default.replication.factor, offsetreplication factor
 sed -i 's/broker.id=0/broker.id=${index}/g' /etc/kafka/server.properties
 sed -i 's/zookeeper.connect=localhost:2181/zookeeper.connect=kafka-1.${cohort}.training:2181,kafka-2.${cohort}.training:2181,kafka-3.${cohort}.training:2181/g' /etc/kafka/server.properties
-echo -e "\ndefault.replication.factor=3\n"
+echo -e "\ndefault.replication.factor=3\n"  >> /etc/kafka/server.properties
 sed -i 's/offsets.topic.replication.factor=1/offsets.topic.replication.factor=3/g' /etc/kafka/server.properties
 echo -e "\nmin.insync.replicas=2\n" >> /etc/kafka/server.properties
 

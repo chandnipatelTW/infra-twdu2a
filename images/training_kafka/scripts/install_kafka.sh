@@ -22,8 +22,6 @@ EOF
 # Install Confluent platform
 sudo yum clean all && sudo yum install -y confluent-platform-oss-${CONFLUENT_SCALA_VERSION}
 
-sudo sed -i 's/log.retention.hours=168/log.retention.hours=8/g' /etc/kafka/server.properties
-
 sudo systemctl enable confluent-zookeeper
 sudo systemctl enable confluent-kafka
 
