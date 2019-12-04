@@ -130,7 +130,7 @@ workflows:
       - approveProdEnvSetup:
           type: approval
           requires:
-            - testEnvironmentSetup
+            - dummy
 
       - approvefirstTimeSetupProd:
           type: approval
