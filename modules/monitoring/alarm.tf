@@ -27,7 +27,7 @@ EOF
 
 resource "aws_cloudwatch_metric_alarm" "has_station_mart_updated" {
   alarm_name                = "2wheelers-delivery-file-check-${var.cohort}"
-  comparison_operator       = "MoreThanThreshold"
+  comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
   metric_name               = "has_station_mart_updated"
   namespace                 = "TwoWheelers"
@@ -45,7 +45,7 @@ resource "aws_cloudwatch_metric_alarm" "has_station_mart_updated" {
 
 resource "aws_cloudwatch_metric_alarm" "duplicate_station_id_count" {
   alarm_name                = "2wheelers-duplicate_station_id_count-${var.cohort}"
-  comparison_operator       = "MoreThanThreshold"
+  comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
   metric_name               = "duplicate_station_id_count"
   namespace                 = "TwoWheelers"
@@ -63,7 +63,7 @@ resource "aws_cloudwatch_metric_alarm" "duplicate_station_id_count" {
 
 resource "aws_cloudwatch_metric_alarm" "null_latitude_longitude_count" {
   alarm_name                = "2wheelers-null_latitude_longitude_count-${var.cohort}"
-  comparison_operator       = "MoreThanThreshold"
+  comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
   metric_name               = "null_latitude_longitude_count"
   namespace                 = "TwoWheelers"
