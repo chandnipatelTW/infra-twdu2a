@@ -12,3 +12,8 @@ output "kafka_instance_id" {
   description = "The instance id."
   value       = "${aws_instance.kafka.id}"
 }
+
+output "kafka_cluster_instance_ids" {
+  description = "The instance ids of nodes in the kafka cluster."
+  value       = ["${aws_instance.kafka_cluster.*.id}"]
+}
