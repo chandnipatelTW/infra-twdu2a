@@ -99,9 +99,13 @@ resource "aws_cloudwatch_dashboard" "main" {
             "height": 3,
             "properties": {
                 "metrics": [
-                    [ "System/Linux", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_instance_id}", "Filesystem", "/dev/xvda1", { "label": "DiskSpaceUtilization" } ],
-                    [ ".", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_instance_id}" ]
-                ],
+                    [ "System/Linux", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_cluster_instance_ids.0}", { "label": "MemoryUtilization Node 0" } ],
+                    [ "System/Linux", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_cluster_instance_ids.1}", { "label": "MemoryUtilization Node 1" } ],
+                    [ "System/Linux", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_cluster_instance_ids.2}", { "label": "MemoryUtilization Node 2" } ],
+                    [ ".", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_cluster_instance_ids.0}", "Filesystem", "/dev/xvda1",{ "label": "DiskSpaceUtilization Node 0" } ],
+                    [ ".", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_cluster_instance_ids.1}", "Filesystem", "/dev/xvda1",{ "label": "DiskSpaceUtilization Node 1" } ],
+                    [ ".", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_cluster_instance_ids.2}", "Filesystem", "/dev/xvda1",{ "label": "DiskSpaceUtilization Node 2" } ]
+                   ],
                 "view": "timeSeries",
                 "stacked": false,
                 "region": "${var.aws_region}",
