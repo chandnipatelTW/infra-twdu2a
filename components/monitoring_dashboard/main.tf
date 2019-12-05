@@ -13,5 +13,5 @@ module "monitoring" {
 
   aws_region = "${var.aws_region}"
   cohort = "${var.cohort}"
-  alarms_email = "sanjeevu@thoughtworks.com"
+  alarms_email = "twdu2-cia@thoughtworks.com"
 }
